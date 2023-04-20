@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { validation1 } from '../interface';
+import { LogserviceService } from './logservice.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +10,22 @@ CentralArray:validation1[]=[demo];
 sup=0;
 pre = 'stud:'
 
-  constructor() { }
+constructor(private logService:LogserviceService) {}
 
   addData(data:validation1,str:string){
 
     if(str == 'update'){
     let  inx =this.CentralArray.findIndex(ob => ob.Id == data.Id);
     this.CentralArray[inx] = data;
-    alert('Data Updated successfully')
+    this.logService.log(`Updated student ${data.name.firstName}`);
     }
     else{
 
       data.Id = this.pre.concat(this.sup.toString())
       this.sup+=1;
       this.CentralArray.push(data)
+    this.logService.log(`Added student ${data.name.firstName}`);
+
     }
     
   }
@@ -40,7 +43,10 @@ pre = 'stud:'
 
   deleteData(inx:string){
     let index =  this.CentralArray.findIndex(c => c.Id ===inx)
+    this.logService.log(`deleted student ${this.CentralArray[index].name.firstName}`);
     this.CentralArray.splice(index,1)
+
+
   }
 
   updateData(data:validation1){

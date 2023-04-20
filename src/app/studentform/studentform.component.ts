@@ -75,7 +75,7 @@ export class StudentformComponent {
       this.stu.addData(obj,this.title)
       
       this.array1 = this.stu.getAll()
-      console.log(this.stu.getAll());
+      
       this.id='';
       
       if(this.title == 'update')this.title='submit'
@@ -92,10 +92,10 @@ export class StudentformComponent {
     if(ob1 != undefined) {
       // ob1 ={} as validation1
       this.studentForm.patchValue(ob1);
-alert('changes')
+
       this.title = 'update'
       this.id = ob1.Id;
-      console.log(ob1);
+ 
       
     }
   }
