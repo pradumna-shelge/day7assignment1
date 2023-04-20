@@ -1,0 +1,220 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<div class="wrapper w-75 bg1  p-3 rounded bg-white m-auto mb-5 shadow-lg" [formGroup]="studentForm">
+    <div class="">
+        <h3>Student Information</h3>
+        <div formGroupName="name" class="d-flex justify-content-around w-100">
+          <div>
+            <label class="form-label" for="firstName">First Name:</label>
+            <input
+              class="form-control"
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+            />
+            <small
+              *ngIf="firstName && firstName.touched && firstName.invalid"
+              class="text-danger"
+            >
+              *First Name Required
+            </small>
+          </div>
+    
+          <div>
+            <label class="form-label" for="middleName">Middle Name:</label>
+            <input
+              class="form-control"
+              type="text"
+              id="middleName"
+              formControlName="middleName"
+            />
+            <small
+              *ngIf="middleName && middleName.touched && middleName.invalid"
+              class="text-danger"
+            >
+              *Middle Name Required
+            </small>
+          </div>
+    
+          <div>
+            <label class="form-label" for="lastName">Last Name:</label>
+    
+            <input
+              class="form-control"
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+            />
+            <small
+              *ngIf="lastName && lastName.touched && lastName.invalid"
+              class="text-danger"
+            >
+              *Last Name Required
+            </small>
+          </div>
+        </div>
+    
+        <div>
+          <label class="form-label" for="dob">Date of Birth:</label>
+          <input class="form-control" type="date" id="dob" formControlName="dob" />
+          <small *ngIf="dob && dob.touched && dob.invalid" class="text-danger">
+            *Please choose date
+          </small>
+        </div>
+    
+        <!-- Place of Birth -->
+        <div>
+          <label class="form-label" for="placeOfBirth">Place of Birth:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="placeOfBirth"
+            formControlName="placeOfBirth"
+          />
+          <small
+            *ngIf="placeOfBirth && placeOfBirth.invalid && placeOfBirth.touched"
+            class="text-danger"
+          >
+            * Require place of Birth
+          </small>
+        </div>
+    
+        <!-- First Language -->
+        <div>
+          <label class="form-label" for="firstLanguage">First Language:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="firstLanguage"
+            formControlName="firstLanguage"
+          />
+          <small
+            *ngIf="firstLanguage && firstLanguage.invalid && firstLanguage.touched"
+            class="text-danger"
+          >
+            * Please enter first language
+          </small>
+        </div>
+    
+        <!-- Address -->
+        <div formGroupName="address" class="d-flex">
+          <div>
+            <label class="form-label" for="city">City:</label>
+            <input
+              class="form-control"
+              type="text"
+              id="city"
+              formControlName="city"
+            />
+            <small *ngIf="city && city.invalid && city.touched" class="text-danger">
+              * Require name of City
+            </small>
+          </div>
+    
+          <div>
+            <label class="form-label" for="state">State:</label>
+    
+            <input
+              class="form-control"
+              type="text"
+              id="state"
+              formControlName="state"
+            />
+            <small
+              *ngIf="state && state.invalid && state.touched"
+              class="text-danger"
+            >
+              * Require name of state
+            </small>
+          </div>
+    
+          <div>
+            <label class="form-label" for="country">Country:</label>
+            <input
+              class="form-control"
+              type="text"
+              id="country"
+              formControlName="country"
+            />
+            <small
+              *ngIf="country && country.invalid && country.touched"
+              class="text-danger"
+            >
+              * Require name of country
+            </small>
+          </div>
+    
+          <div>
+            <label class="form-label" for="pin">Pin:</label>
+            <input
+              class="form-control"
+              type="text"
+              id="pin"
+              formControlName="pin"
+            />
+            <div
+              *ngIf="pin && pin.invalid && (pin.touched || pin.dirty)"
+              class="text-danger"
+            >
+              <div *ngIf="pin.errors?.['required']">* Require Pincode</div>
+              <div *ngIf="pin.errors?.['pattern']">
+                * Pincode should be Numeric Format
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="m-auto w-50 mt-1" (click)="onSubmit()">
+        <button class="btn btn-outline-success  w-100">  
+            {{title}}
+        </button>
+    </div>
+ 
+</div>
+
+
+<div class="table-responsive">
+<table class=" table " >
+
+
+    <tr>
+      <th >Full Name</th>
+<th class scope="row"> Date_of_Birth</th>
+<th class scope="row">place_Of_Birth</th>
+<th class scope="row">first_Language</th>
+<th >Address</th>
+
+</tr>
+
+<ng-container *ngFor="let item of this.stu.getAll()" >
+    <tr *ngIf="item.address.pin != 0">
+
+        <td scope="row">{{item.name.firstName}} {{item.name.middleName}} {{item.name.lastName}}</td>
+
+<td>{{item.dob}}</td>
+<td>{{item.placeOfBirth}}</td>
+<td>{{item.firstLanguage}}</td>
+
+<td>
+    <tr>
+        <td>{{item.address.city}}</td>
+        <td>{{item.address.state}}</td>
+        <td>{{item.address.country}}</td>
+        <td>{{item.address.pin}}</td>
+    </tr>
+</td>
+<td>
+    <tr>
+        <td><button (click)="delete(item.Id)" class="btn btn-danger">Delete</button></td>
+        <td><button (click)="update(item.Id)" class="btn btn-warning">Update</button></td>
+    </tr>
+</td>
+</tr>
+    
+</ng-container>
+</table>
+
+</div>
+
+
+
